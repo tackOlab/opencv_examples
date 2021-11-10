@@ -24,8 +24,18 @@ int main(int argc, char *argv[]) {
   float *coeff = new float[filter_size * filter_size];
   create_lowpass(coeff, filter_size);
   cv::Mat kernel(cv::Size(filter_size, filter_size), CV_32F, coeff);
+
+  float my[9] = {0.125, 0.125, 0.125, 0.25, 0.5, 0.25, 0.125, 0.125, 0.125};
+  float sum = 0.0;
+  for (int i = 0; i < 9; ++i) {
+    sum += my[i];
+  }
+  for (int i = 0; i < 9; ++i) {
+    my[i] /= sum;
+  }
+  cv::Mat my_kernel(cv::Size(3, 3), CV_32F, my);  // my filter
   cv::Mat dst;
-  cv::filter2D(image, dst, -1, kernel);
+  cv::filter2D(image, dst, -1, my_kernel);
   cv::imshow("input", image);
   cv::imshow("filtered output", dst);
   cv::waitKey();
