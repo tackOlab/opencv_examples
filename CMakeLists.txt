@@ -20,6 +20,9 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 add_executable(cv_imread cv_imread.cpp)
 target_link_libraries(cv_imread ${OpenCV_LIBS})
 
+add_executable(cv_filter2d cv_filter2d.cpp)
+target_link_libraries(cv_filter2d ${OpenCV_LIBS})
+
 add_executable(cv_video cv_video.cpp)
 target_link_libraries(cv_video ${OpenCV_LIBS})
 
