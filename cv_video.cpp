@@ -2,7 +2,7 @@
 #include <opencv2/opencv.hpp>
 
 int main() {
-  const int cap_width = 640;
+  const int cap_width = 960;
   const int cap_height = 480;
   cv::VideoCapture camera(0);
   if (camera.isOpened() == false) {

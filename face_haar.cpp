@@ -7,10 +7,10 @@ int main() {
   cv::CascadeClassifier detector_face, detector_eye;
   // path to XML files might be different. Check your install of OpenCV.
   detector_face.load(
-      "/usr/local/Cellar/opencv/4.5.2_2/share/opencv4/haarcascades/"
+      "C:\\tools\\msys64\\mingw64\\share\\opencv4\\haarcascades\\"
       "haarcascade_frontalface_alt.xml");
   detector_eye.load(
-      "/usr/local/Cellar/opencv/4.5.2_2/share/opencv4/haarcascades/"
+      "C:\\tools\\msys64\\mingw64\\share\\opencv4\\haarcascades\\"
       "haarcascade_eye.xml");
   const int cap_width = 640;
   const int cap_height = 480;

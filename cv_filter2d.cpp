@@ -24,9 +24,9 @@ int main(int argc, char *argv[]) {
   float *coeff = new float[filter_size * filter_size];
   create_lowpass(coeff, filter_size);
   cv::Mat kernel(cv::Size(filter_size, filter_size), CV_32F, coeff);
-  cv::Mat gray, dst;
-  cv::cvtColor(image, gray, COLOR_BGR2GRAY);
-  cv::filter2D(gray, dst, -1, kernel);
+  cv::Mat dst;
+  cv::filter2D(image, dst, -1, kernel);
+  cv::imshow("input", image);
   cv::imshow("filtered output", dst);
   cv::waitKey();
   cv::destroyAllWindows();
