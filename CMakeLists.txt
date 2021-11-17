@@ -34,3 +34,7 @@ target_link_libraries(ball_throw ${OpenCV_LIBS})
 
 add_executable(cv_quantize cv_quantize.cpp)
 target_link_libraries(cv_quantize ${OpenCV_LIBS})
+
+add_executable(cv_blkproc cv_blkproc.cpp)
+target_link_libraries(cv_blkproc ${OpenCV_LIBS})
+
