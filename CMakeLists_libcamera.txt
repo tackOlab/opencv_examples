@@ -1,0 +1,64 @@
+cmake_minimum_required(VERSION 3.13)
+project (TEST LANGUAGES CXX DESCRIPTION "OpenCV examples")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(CAMERA REQUIRED libcamera)
+
+find_library(LIBCAMERA_LIBRARY libcamera.so REQUIRED)
+find_library(LIBCAMERA_BASE_LIBRARY libcamera-base.so REQUIRED)
+message(STATUS ${CAMERA_INCLUDE_DIRS})
+message(STATUS ${LIBCAMERA_LIBRARY})
+message(STATUS ${LIBCAMERA_BASE_LIBRARY})
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+  set(CMAKE_CXX_FLAGS "-Wall -march=armv8-a -mtune=cortex-a72 -fdiagnostics-color=always")
+endif()
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -g")
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O2")
+	set(CMAKE_CXX_FLAGS_RelWithDebInfo "${CMAKE_CXX_FLAGS} -O2 -g")
+endif()
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fdiagnostics-color=always")
+endif()
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics")
+endif()
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
+
+find_package(OpenCV REQUIRED)
+if (OpenCV_FOUND)
+	message("Found OpenCV")
+	message("Includes:" ${OpenCV_INCLUDE_DIRS})
+endif(OpenCV_FOUND)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+# add_executable(cv_imread cv_imread.cpp)
+# target_link_libraries(cv_imread ${OpenCV_LIBS})
+
+# add_executable(cv_filter2d cv_filter2d.cpp)
+# target_link_libraries(cv_filter2d ${OpenCV_LIBS})
+
+# add_executable(cv_video cv_video.cpp)
+# target_link_libraries(cv_video ${OpenCV_LIBS})
+
+# add_executable(face_haar face_haar.cpp)
+# target_link_libraries(face_haar ${OpenCV_LIBS})
+
+# add_executable(ball_throw ball_throw.cpp)
+# target_link_libraries(ball_throw ${OpenCV_LIBS})
+
+# add_executable(cv_quantize cv_quantize.cpp)
+# target_link_libraries(cv_quantize ${OpenCV_LIBS})
+
+# add_executable(cv_blkproc cv_blkproc.cpp)
+# target_link_libraries(cv_blkproc ${OpenCV_LIBS})
+
+include_directories(. "${CAMERA_INCLUDE_DIRS}")
+set(LIBCAMERA_LIBRARIES "${LIBCAMERA_LIBRARY}" "${LIBCAMERA_BASE_LIBRARY}")
+add_executable(cv_grub frame_grub_libcamera.cpp LibCamera.cpp)
+
+target_link_libraries(cv_grub "${LIBCAMERA_LIBRARIES}" ${OpenCV_LIBS})
+
