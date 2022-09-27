@@ -27,7 +27,7 @@
 #include <unordered_map>
 #include <vector>
 
-using namespace libcamera;
+// using namespace libcamera;
 
 typedef struct {
   uint8_t *imageData;
@@ -40,38 +40,38 @@ class LibCamera {
   LibCamera(){};
   ~LibCamera(){};
 
-  int initCamera(int width, int height, PixelFormat format, int buffercount,
-                 int rotation);
+  int initCamera(int width, int height, libcamera::PixelFormat format,
+                 int buffercount, int rotation);
 
   int startCamera();
   bool readFrame(LibcameraOutData *frameData);
   void returnFrameBuffer(LibcameraOutData frameData);
 
-  void set(ControlList controls);
+  void set(libcamera::ControlList controls);
   void stopCamera();
   void closeCamera();
 
  private:
   int startCapture();
-  int queueRequest(Request *request);
-  void requestComplete(Request *request);
-  void processRequest(Request *request);
+  int queueRequest(libcamera::Request *request);
+  void requestComplete(libcamera::Request *request);
+  void processRequest(libcamera::Request *request);
 
   unsigned int cameraIndex_;
   uint64_t last_;
-  std::unique_ptr<CameraManager> cm;
-  std::shared_ptr<Camera> camera_;
+  std::unique_ptr<libcamera::CameraManager> cm;
+  std::shared_ptr<libcamera::Camera> camera_;
   bool camera_acquired_ = false;
   bool camera_started_ = false;
-  std::unique_ptr<CameraConfiguration> config_;
-  std::unique_ptr<FrameBufferAllocator> allocator_;
-  std::vector<std::unique_ptr<Request>> requests_;
+  std::unique_ptr<libcamera::CameraConfiguration> config_;
+  std::unique_ptr<libcamera::FrameBufferAllocator> allocator_;
+  std::vector<std::unique_ptr<libcamera::Request>> requests_;
   // std::map<std::string, Stream *> stream_;
   std::map<int, std::pair<void *, unsigned int>> mappedBuffers_;
 
-  std::queue<Request *> requestQueue;
+  std::queue<libcamera::Request *> requestQueue;
 
-  ControlList controls_;
+  libcamera::ControlList controls_;
   std::mutex control_mutex_;
   std::mutex camera_stop_mutex_;
   std::mutex free_requests_mutex_;

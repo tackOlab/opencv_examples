@@ -1,5 +1,7 @@
 #include "LibCamera.h"
 
+using namespace libcamera;
+
 int LibCamera::initCamera(int width, int height, PixelFormat format,
                           int buffercount, int rotation) {
   int ret;

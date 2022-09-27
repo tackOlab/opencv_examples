@@ -29,10 +29,16 @@ int main() {
   const int width = IMGWIDTH;
   const int height = IMGHEIGHT;
   char key;
-  int ret = cam.initCamera(width, height, formats::RGB888, 4, 0);
-  ControlList controls_;
+  int ret = cam.initCamera(width, height, libcamera::formats::RGB888, 4, 0);
+  libcamera::ControlList controls_;
+
   int64_t frame_time = 1000000 / 30;
-  controls_.set(controls::FrameDurationLimits, {frame_time, frame_time});
+  // controls_.set(controls::FrameDurationLimits, {frame_time, frame_time});
+
+  controls_.set(libcamera::controls::AE_ENABLE, true);
+  controls_.set(libcamera::controls::AF_TRIGGER, 0);
+  controls_.set(libcamera::controls::AF_MODE, 2);
+  controls_.set(libcamera::controls::AF_RANGE, 0);
   cam.set(controls_);
   if (!ret) {
     bool flag;
